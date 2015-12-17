@@ -1,0 +1,10 @@
+all: julia
+
+julia: cplane.o
+
+run:all
+	echo "Running: cplane"	
+	./julia
+
+clean:
+	rm -f julia cplane.o
