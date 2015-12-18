@@ -11,8 +11,8 @@
 
 #include <complex>
 #include <cstdio>
-#include <boost/numeric/ublas/io.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
+
+#include <vector>
 
 //*************
 //
@@ -38,17 +38,15 @@ CPlane<T>::CPlane(long double xmin, long double xmax,
   // set private fields rows and cols properly
   rows = _rows;
   cols = _cols;
-
-
-			
-	}
-	// Add each matrix element-by-element
+		
+	
+	// Generate complex plane
   for (unsigned int i=0; i<rows; i++) {
     for (unsigned int j=0; j<cols; j++) {
-			std::complex<long double> ab;
-			ab.x = xmin+(double)i*(xmax-xmin)/(double)(_cols-1);
-			ab.y = ymin+(double)j*(ymax-ymin)/(double)(_rows-1);
-			mat[i][j] = ab;
+	std::complex<long double> ab;
+	ab.real() = xmin+(double)i*(xmax-xmin)/(double)(_cols-1);
+	ab.imag() = ymin+(double)j*(ymax-ymin)/(double)(_rows-1);
+	mat[i][j] = ab;
     }
   }
 }
