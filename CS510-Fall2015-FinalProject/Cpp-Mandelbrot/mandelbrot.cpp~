@@ -1,11 +1,11 @@
 #include <iostream>
 #include <complex>
 #include <cstdio>
-#include <boost/numeric/ublas/io.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
 
 #include "cplane.hpp"
 #include "julia.hpp"
+
+using namespace std;
 
 int main(int argc, char *argv[]){
         
@@ -16,36 +16,38 @@ int main(int argc, char *argv[]){
        		return 0;
    	 }
 
-   	 boost::numeric::ublas::matrix<std::complex<long double> > test2;
 
-   	 //Assigns bounds for the real component
-   	 std::stringstream(argv[1]) >> xmin;	std::stringstream(argv[2]) >> xmax;
+   	//Assigns bounds for the real component
+   	stringstream(argv[1]) >> xmin;		stringstream(argv[2]) >> xmax;
 
 	//Assigns bounds for the imaganary component
- 	std::stringstream(argv[3]) >> ymin;	std::stringstream(argv[4]) >> ymax;
+ 	stringstream(argv[3]) >> ymin;		stringstream(argv[4]) >> ymax;
 
 	//Assigns points for the real and imaganary components of the plane
-	std::stringstream(argv[5]) >> xpoints;	std::stringstream(argv[6]) >> ypoints;
+	stringstream(argv[5]) >> xpoints;	stringstream(argv[6]) >> ypoints;
 
-  
-	cplane newcplane;
-	newcplane.set(xmin,xmax,ymin,ymax,xpoints,ypoints);
+  	complex<long double> randSeed(0., 0.);
+	CPlane<complex<long double> > newcplane(xmin,xmax,ymin,ymax,xpoints,ypoints,randSeed);
 
-	lcomplex compC (0,0); // Initialize the entries
 	int curiter;
-	for(int y = 0; y<newcplane.ypoints; y++){
-        	for(int x =0; x<newcplane.xpoints; x++){
+	int maxiter;
+	maxiter = 64;
+	complex<long double> runningz(0., 0.);
+	for(int y = 0; y<ypoints; y++){
+        	for(int x = 0; x<xpoints; x++){
             		
-			lcomplex runningcomplex = newcplane.mat(x,y);
+			runningz = juliamap(randSeed, newcplane(x,y));
 			
-			while(curiter<256&&std::abs(runningcomplex)>2.0){
-				runningcomplex = juliamap(runningcomplex, newcplane.mat(x,y));
+			while((curiter<maxiter)&&abs(runningz)<2.0){
+				runningz = juliamap(runningz, newcplane(x,y));
 				curiter++;
 			}
             	
             		// Print out data
-            		std::cout << newcplane.mat(x,y).real() << " " << newcplane.mat(x,y).imag() 
-			<< " " << curiter*(curiter>=maxiter) << std::endl;
-        }
-    }
+            		cout << newcplane(x,y).real() << "," << newcplane(x,y).imag() 
+			<< "," << curiter << endl;
+			curiter=0;
+        	}
+    	}
+	return 0;
 }
