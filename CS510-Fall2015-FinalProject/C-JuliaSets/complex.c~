@@ -2,8 +2,8 @@
 
 typedef struct Complex
 {
-	double x;
-	double y;
+	long double x;
+	long double y;
 }complex;
 
 
@@ -54,5 +54,3 @@ int main(void){
 	test(ab,ab);
 	return 0;
 }
-
-
