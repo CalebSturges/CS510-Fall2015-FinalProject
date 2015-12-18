@@ -17,6 +17,8 @@ typedef struct cplane {
 	VALUE ymin;
 	VALUE ymax;
 	INDEX maxiter;
+	VALUE real;
+	VALUE imag;
 	COMPLEX c;
  	COMPLEX *mat;
 } CPLANE;
@@ -24,7 +26,7 @@ typedef struct cplane {
 
 //Construct a CPLANE to store the values of the complex numbers
 CPLANE new_cplane(VALUE xmin, VALUE xmax,
-		VALUE ymin, VALUE ymax, 
+		VALUE ymin, VALUE ymax,  VALUE creal, VALUE cimag,
 		INDEX xpoints, INDEX ypoints);
 
 void delete_cplane(CPLANE m);
@@ -48,4 +50,3 @@ int complex_print(COMPLEX z);
 void print_cplane(const CPLANE *m);
 
 int test_cplane(CPLANE a);
-
