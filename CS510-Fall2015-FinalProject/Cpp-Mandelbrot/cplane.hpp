@@ -1,7 +1,6 @@
 #ifndef __MATRIX_H
 #define __MATRIX_H
 
-// Most useful standard library implementation of a vector
 #include <vector>
 
 #include <iostream>
@@ -10,8 +9,6 @@
 
 #include <complex>
 #include <cstdio>
-#include <boost/numeric/ublas/io.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
 
 // A template allows a type T to be passed into a class as a
 // parameter, so a single class definition can use different types 
@@ -30,7 +27,9 @@ template <typename T> class CPlane {
     // Interface section
     //
     // Default constructor, make matrix entries all one value of type T
-    CPlane(unsigned int _rows, unsigned int _cols, const T& _initial);
+    CPlane(long double xmin, long double xmax,
+		long double ymin, long double ymax, 
+		unsigned int _rows, unsigned int _cols, const T& _initial) ;
 
     // Alternate copy-constructor
     CPlane(const CPlane<T> &rhs);
