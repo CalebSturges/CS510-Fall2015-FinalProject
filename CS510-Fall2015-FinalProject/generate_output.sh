@@ -9,7 +9,6 @@ make clean
 make
 ./mandelbrot -.42 -.35 -.67 -.6 1000 1000 > ../mandelbrot_-.42_-.35_-.67_-.6.csv
 cd -
-mv *.csv Datasets
-cd Datasets
 python plot_data.py "juliaset_-1.56_-.04" "mandelbrot_-.42_-.35_-.67_-.6"
+
 
