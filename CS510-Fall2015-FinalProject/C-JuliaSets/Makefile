@@ -1,10 +1,5 @@
-all: julia
-
-julia: cplane.o
-
-run:all
-	echo "Running: cplane"	
-	./julia
-
+julia: cplane.h cplane.c julia.c
+	gcc -o julia cplane.c julia.c
 clean:
-	rm -f julia cplane.o
+	$(RM) julia
+
