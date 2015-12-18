@@ -54,5 +54,3 @@ int main(void){
 	test(ab,ab);
 	return 0;
 }
-
-
