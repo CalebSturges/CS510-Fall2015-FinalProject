@@ -1,7 +1,4 @@
-all: mandelbrot
-
-run: all
-	./mandelbrot
-
+mandlebrot:cplane.cpp cplane.hpp julia.cpp julia.hpp mandelbrot.cpp
+	g++ -o mandelbrot mandelbrot.cpp julia.cpp cplane.cpp
 clean:
-	rm -f mandelbrot
+	$(RM) mandelbrot.o
