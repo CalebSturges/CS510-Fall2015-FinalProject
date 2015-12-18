@@ -6,7 +6,8 @@
 
 //Construct a CPLANE to store the values of the complex numbers
 CPLANE new_cplane(VALUE xmin, VALUE xmax,
-		VALUE ymin, VALUE ymax, VALUE creal, VALUE cimag, 
+		VALUE ymin, VALUE ymax,
+		VALUE creal, VALUE cimag, 
 		INDEX xpoints, INDEX ypoints) {
 
   CPLANE cp;
@@ -16,7 +17,9 @@ CPLANE new_cplane(VALUE xmin, VALUE xmax,
   cp.ymax = ymax;
   cp.rows = xpoints;
   cp.cols = ypoints;
-  cp.maxiter=256;
+  cp.real = creal;
+  cp.imag = cimag;
+  cp.maxiter=2048;
 
   cp.mat = (COMPLEX *)calloc(xpoints * ypoints, sizeof(COMPLEX));
   if (cp.mat == NULL) {
@@ -28,7 +31,7 @@ CPLANE new_cplane(VALUE xmin, VALUE xmax,
 			COMPLEX ab;
 			ab.x = xmin+(double)i*(xmax-xmin)/(double)(xpoints-1);
 			ab.y = ymin+(double)j*(ymax-ymin)/(double)(ypoints-1);
-			complex_print(ab);
+
 			*(cp.mat + (xpoints * j) + i) = ab;
 	}
 }
@@ -66,7 +69,7 @@ COMPLEX get(const CPLANE *m, const INDEX row, const INDEX col) {
 
 void juliaiterate(const CPLANE *m){
 	COMPLEX randseed;
-	randseed.x=0.; randseed.y=0.;
+	randseed.x=m->real; randseed.y=m->imag;
 	unsigned long i, j;
 	for (i = 0; i < m->cols; i++){
 		for (j = 0; j < m->rows; j++){
@@ -134,32 +137,11 @@ void print_cplane(const CPLANE *m) {
 
 int test_cplane(CPLANE a){
 	
-  puts("Initial complex plane:");
-  print_cplane(&a);
 
-  /*puts("Modified matrix:");
-  *set(&a, 1, 1, 20.0);
-  *set(&a, 2, 2, 40.0);
-  *set(&a, 0, 4, 60.0);
-  *set(&a, 2, 5, 80.0);
-  *print_cplane(&a);*/
 
-  puts("Element a(2,2):");
-  complex_print(get(&a, 2, 2));
-  puts("");
-  puts("Element a(0,4):");
-  complex_print(get(&a, 0, 4));
-  puts("");
 	juliaiterate(&a);
-  // Destruct matrix when done
-  delete_cplane(a);
+ 
+ 	delete_cplane(a);
 
 	return 0;
 }
-
-//int main(void) {
-	// Construct a new 3x6 matrix
-//  CPLANE a = new_cplane(1.,10.,1.,10.,5,5);
-//	test_cplane(a);
-//	return 0;
-//}
