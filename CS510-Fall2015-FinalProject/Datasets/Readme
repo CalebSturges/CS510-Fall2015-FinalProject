@@ -1,0 +1,7 @@
+CS510/Fall2015 - Final Project
+Caleb Sturges
+I studied a variety of cases of the julia and mandelbrot sets.
+For the Julia sets I focused on cases that either affine transformations of a given initial random seed 
+as well as ones in which the the neagitve compenents where switched, by multiplying both by a negative number.
+
+For the mandelbrot sets I zoomed in on a particular region to study its quasi-fractal properties.
